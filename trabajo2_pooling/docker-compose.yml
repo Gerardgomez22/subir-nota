@@ -1,0 +1,29 @@
+##############################################################################
+#  Docker Compose — PostgreSQL para el Trabajo 2: Pooling de Conexiones
+#
+#  Uso:
+#    docker-compose up -d        → Levantar la base de datos en segundo plano
+#    docker-compose down         → Detener y eliminar los contenedores
+#    docker-compose down -v      → Detener y eliminar también los volúmenes
+#
+#  La base de datos estará disponible en localhost:5432
+##############################################################################
+
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pooling_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pooling_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
